@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 // Project 3D points onto a 2D plane
 const project = (q: number[], d: number): number[] => [

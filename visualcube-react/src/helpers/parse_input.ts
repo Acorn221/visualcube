@@ -1,8 +1,8 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 import { ColourScheme, Options } from './config';
-import { defaultConfig } from './config.js';
-import { fcs_doperm, invert_alg } from './alg_parser.js';
+import { defaultConfig } from './config';
+import { fcs_doperm, invert_alg } from './alg_parser';
 
 const getOutputFormat = (
   defaultFormat: string,
@@ -268,8 +268,6 @@ const parseEverything = (options: Options) => {
     cubeColour: defaultConfig.cubeColour,
     OUTLINE_WIDTH: defaultConfig.OUTLINE_WIDTH,
     imageSize,
-    // arrowsColour,
-    // arrowsDefinitions,
   };
 };
 

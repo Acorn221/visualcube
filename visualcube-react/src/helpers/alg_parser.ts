@@ -1,5 +1,5 @@
 // Permutes an NxNxN face definition according to the given alg
-import R from 'ramda';
+import * as R from 'ramda';
 
 const fcs_pos = (r: number, c: number, o: number, d: number): number => {
   switch (o) {
