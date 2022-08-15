@@ -34,7 +34,7 @@ const translate = (q: number[], t: number[]): number[] =>
 
 const scale = (q: number[], f: number): number[] => R.map(R.multiply(f))(q);
 
-function rotate(q: number[], ax: number, an: number): number[] {
+const rotate = (q: number[], ax: number, an: number): number[] => {
   let np = [q[0], q[1], q[2]];
   switch (ax) {
     case 0:

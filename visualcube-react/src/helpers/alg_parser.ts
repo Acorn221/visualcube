@@ -46,7 +46,7 @@ const fcs_permute = (
 };
 
 // Maps move names to a move id
-function fcs_move_id(move: string): number {
+const fcs_move_id = (move: string): number => {
   switch (move) {
     case 'y':
       return 0;
