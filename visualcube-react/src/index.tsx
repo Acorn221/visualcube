@@ -1,8 +1,12 @@
-import React, { FC, HTMLAttributes, ReactChild } from 'react';
+import React, { HTMLAttributes, useState, useEffect } from 'react';
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
+import { Options } from './helpers/config';
+import { parseEverything } from './helpers/parse_input';
+import { generateImage } from './helpers/svg-parser';
+
+export interface VisualCubeProps extends HTMLAttributes<HTMLDivElement> {
   /** custom content, defaults to 'the snozzberries taste like snozzberries' */
-  children?: ReactChild;
+  options: Options;
 }
 
 // Please do not use types off of a default export module or else Storybook Docs will suffer.
@@ -10,6 +14,21 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
 /**
  * A custom Thing component. Neat!
  */
-export const Thing: FC<Props> = ({ children }) => {
-  return <div>{children || `the snozzberries taste like snozzberries`}</div>;
+// : FC<VisualCubeProps> 
+export const VisualCube =  ({options}: VisualCubeProps) => {
+  const [buffer, setBuffer] = useState<Buffer>();
+  
+  useEffect(() => {
+    generateImage(parseEverything(options)).then((b) => {
+      setBuffer(b);
+    })
+  });
+
+  return (
+    <div>
+      <h1>hi</h1>
+      {buffer}
+      <p>{JSON.stringify(options, null, 2)}</p>
+    </div>
+  )
 };
