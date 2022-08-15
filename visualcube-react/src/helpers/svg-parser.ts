@@ -186,7 +186,7 @@ const facelet_svg = (
 };
 
 // Renders the top rim of the R U L and B faces out from side of cube
-function oll_svg(
+const oll_svg = (
   fc: number,
   rv: number[][],
   dim: number,
@@ -194,7 +194,7 @@ function oll_svg(
   cc: string,
   cs: ColourScheme,
   facelets: number[]
-) {
+) => {
   let svg = '';
   // Translation vector, to move faces out
   let tv1 = scale(rv[fc], 0.0);
@@ -228,7 +228,7 @@ function oll_svg(
 }
 
 /** Generates a polygon SVG tag for cube facelets */
-function gen_facelet(
+const gen_facelet = (
   p1: number[],
   p2: number[],
   p3: number[],
@@ -237,7 +237,7 @@ function gen_facelet(
   cc: string,
   cs: ColourScheme,
   facelets: number[]
-): string {
+): string => {
   let fcol = cs[['U', 'R', 'F', 'D', 'L', 'B', 'N', 'T'][facelets[seq]]];
   return `<polygon ${
     fcol === 't' ? 'fill-opacity="0"' : `fill='${fcol}'`
