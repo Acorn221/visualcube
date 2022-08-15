@@ -10,15 +10,15 @@ const getOutputFormat = (
   requestedFormat: string | undefined
 ): string => {
   if (R.includes(requestedFormat, formatOptions)) {
-    return <string>requestedFormat;
+    return requestedFormat || '';
   }
   return defaultFormat;
 };
 
 const parseRotation = R.cond([
-  [R.startsWith('x'), (r) => [0, Number(R.tail(r))]],
-  [R.startsWith('y'), (r) => [1, Number(R.tail(r))]],
-  [R.startsWith('z'), (r) => [2, Number(R.tail(r))]],
+  [R.startsWith('x'), (r: string) => [0, Number(R.tail(r))]],
+  [R.startsWith('y'), (r: string) => [1, Number(R.tail(r))]],
+  [R.startsWith('z'), (r: string) => [2, Number(R.tail(r))]],
 ]);
 
 const getRotationSequence = (
@@ -45,7 +45,7 @@ const isNumberBetweenOrDefault = (
   y: number,
   num: number | undefined,
   def: number
-): number => <number>(R.both(R.lt(x), R.gt(y))(num) ? num : def);
+): number => <number>(R.both(R.lt(x), R.gt(y))(num || def) ? num : def);
 
 const getColourScheme = (
   defaultColourScheme: ColourScheme,
