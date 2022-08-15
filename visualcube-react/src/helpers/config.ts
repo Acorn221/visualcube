@@ -22,12 +22,9 @@ interface Options {
   alg?: string;
   case?: string;
   bg?: string;
-  // ac?: string;
-  // arw?: string;
 }
 
 interface SvgOptions {
-  outputFormat: string;
   view: string;
   rotationSequence: number[][];
   puzzleSize: number;
@@ -46,14 +43,12 @@ interface SvgOptions {
   cubeColour: string;
   OUTLINE_WIDTH: number;
   imageSize: number;
-  // arrowsColour: string;
-  // arrowsDefinitions: any;
 }
 
 const defaultConfig = {
   maxPuzzleSize: 10,
   defaultPuzzle: 3,
-  outputFormat: 'webp',
+  outputFormat: 'svg',
   outputSize: 128,
   view: '',
   stage: '',
@@ -93,7 +88,6 @@ const defaultConfig = {
     [0, 0, 1],
   ],
   defaultSize: 128,
-  // arrowsColour: 'grey',
 };
 
 export { defaultConfig, SvgOptions, ColourScheme, Options };
