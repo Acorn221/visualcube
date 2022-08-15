@@ -17,6 +17,11 @@
 	Copyright (C) 2010 Conrad Rider
 */
 
+import {
+    Cube,
+    Move,
+} from "./lib_types";
+
 // Face constants
 const U = 0;
 const R = 1;
@@ -1663,8 +1668,7 @@ function gen_state(moves, puzzle, group_id, is_ll) {
     //println("trimmed moves=$moves");
     // 1. Apply different combinations of initial
     // and final moves until a solved state is found
-    var prtns;
-    prtns = {
+    let prtns = {
         0: "",
         1: "x",
         2: "x'",
@@ -1674,8 +1678,7 @@ function gen_state(moves, puzzle, group_id, is_ll) {
         6: "y",
         7: "y'"
     };
-    var frtns;
-    frtns = {
+    let frtns = {
         0: "",
         1: "x",
         2: "x'",
@@ -1689,10 +1692,10 @@ function gen_state(moves, puzzle, group_id, is_ll) {
     valid = false;
     var i;
     __loop1:
-        for (i = 0; i < count(frtns) && !valid; i++) {
+        for (i = 0; i < Object.keys(frtns).length && !valid; i++) {
             var j;
             __loop2:
-                for (j = 0; j < count(prtns) && !valid; j++) {
+                for (j = 0; j < Object.keys(prtns).length && !valid; j++) {
                     var cube;
                     cube = case_cube(prtns[j].moves.frtns[i]);
                     //println("testing cube: ".$prtns[$j].$moves.$frtns[$i]);
@@ -1901,7 +1904,7 @@ function orient_alg(alg, ref, puzzle, group_id) {
     return alg;
 }
 // Returns the location of the FR edge for ELS
-function els_FR(cube) {
+function els_FR(cube: Cube): number {
     var frp;
     frp = 0;
     // assuming its in position
@@ -1918,7 +1921,7 @@ function els_FR(cube) {
 // TODO: This function failes on alg... x' U' R U L' U2 R' U' L' U' L2 u r2 U' z ... part of ZBLL-PI, or H
 // U' l2 u R2 U' R' U' L' U2 R' U L U' ... from ZBLL-PI
 // Returns true if the cube state is a member of the given group
-function is_member(cube, group_id) {
+function is_member(cube: Cube, group_id) {
     //echo "is member of? $group_id :";
     //printcube($cube, 3);
     // Check cube from all y rotation angles
@@ -1942,7 +1945,7 @@ function is_member(cube, group_id) {
     return false;
 }
 // Returns true if the cube state is a member of the given group when AUF is allowed
-function is_member_auf(cube, group_id) {
+function is_member_auf(cube: Cube, group_id) {
     //echo "is member of? $group_id :";
     //printcube($cube, 3);
     // Check cube from all auf rotation angles
@@ -1960,7 +1963,7 @@ function is_member_auf(cube, group_id) {
     return false;
 }
 
-function is_member_strict(cube, group_id) {
+function is_member_strict(cube: Cube, group_id) {
     __loop1: switch (group_id) {
         case 1:
             if (match(cube, VCUBE["2OFL"])) {
@@ -2099,7 +2102,7 @@ function is_member_strict(cube, group_id) {
 }
 
 // Returns a value uniquely identifying this cube state in this group
-function cube_state(cube, group_id) {
+function cube_state(cube: Cube, group_id) {
     __loop1: switch (group_id) {
         case 1:
             return encode_o(array_slice(cube[2], 0, 3), 3);
@@ -2226,7 +2229,7 @@ function case_cubes2(alg, postrot) {
 }
 
 // Returns the move required to rotate the cube to an upright position
-function upright(cube) {
+function upright(cube: Cube) {
     // search for U face centre
     var upos;
     upos = 0;
@@ -2264,7 +2267,7 @@ function upright(cube) {
 }
 
 // Convert cubie cube to face cube, using the default facelet identifiers
-function face_cube(cube, dim) {
+function face_cube(cube: Cube, dim) {
     // Construct default facelet id scheme
     var f;
     __loop1:
@@ -2285,7 +2288,7 @@ function face_cube(cube, dim) {
 
 // Convert cubie cube to facelet cube mapping each facelet
 // to the given facelet id sequence
-function facelet_cube(cube, d, fi) {
+function facelet_cube(cube: Cube, d, fi) {
     // Facelet constants
     // Dimension/2
     var h;
@@ -2565,7 +2568,7 @@ function facelet_cube(cube, d, fi) {
 }
 
 // Convert cubie cube to letter cube (letters representing facelets)
-function letter_cube(cube, dim) {
+function letter_cube(cube: Cube, dim) {
     var fc;
     fc = face_cube(cube, dim);
     var i;
@@ -2578,7 +2581,7 @@ function letter_cube(cube, dim) {
 }
 
 // Convert cubie cube to colour cube
-function col_cube(cube, dim) {
+function col_cube(cube: Cube, dim) {
     // Sheme mapping
     var FACE_COL;
     FACE_COL = {
@@ -2602,7 +2605,7 @@ function col_cube(cube, dim) {
 }
 
 // Print a cube to screen for debugging
-function printcube(cube, dim) {
+function printcube(cube: Cube, dim) {
     var fc;
     fc = letter_cube(cube, dim);
     println("<img src="
@@ -2612,7 +2615,7 @@ function printcube(cube, dim) {
 }
 
 // Applys an alg to the given cube
-function apply_alg(alg, cube) {
+function apply_alg(alg, cube: Cube) {
     var i;
     i = 0;
     var len;
@@ -2888,7 +2891,7 @@ function encode_p(data) {
 
 // Returns whether the cubes match
 // Entries of -1 are counted as matching
-function match(cube1, cube2) {
+function match(cube1: Cube, cube2: Cube) {
     var i;
     __loop1:
         for (i = 0; i < count(cube1); i++) {
@@ -2906,7 +2909,7 @@ function match(cube1, cube2) {
 }
 
 // Permutes and orients cube1 by cube2 n times
-function prod(cube1, cube2, n) {
+function prod(cube1: Cube, cube2: Cube, n) {
     var i;
     __loop1:
         for (i = 0; i < n; i++) {
@@ -2943,7 +2946,7 @@ function prod(cube1, cube2, n) {
 }
 
 // Maps move names to a move id
-function move_id(move) {
+function move_id(move: Move) {
      switch (move) {
         case "U":
             return 0;
