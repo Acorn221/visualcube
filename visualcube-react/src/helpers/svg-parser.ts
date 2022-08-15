@@ -1,5 +1,4 @@
-import R from 'ramda';
-import sharp, { FormatEnum } from 'sharp';
+import * as R from 'ramda';
 
 import { ColourScheme, SvgOptions } from './config';
 import {
@@ -10,7 +9,7 @@ import {
   rotate,
   translate,
   scale,
-} from './utilities.js';
+} from './utilities';
 
 const initCube = (
   rv: number[][],
@@ -248,7 +247,6 @@ function gen_facelet(
 }
 
 const generateImage = async ({
-  outputFormat,
   view,
   rotationSequence,
   puzzleSize,
@@ -267,9 +265,7 @@ const generateImage = async ({
   cubeColour,
   OUTLINE_WIDTH,
   imageSize,
-}: // arrowsColour,
-// arrowsDefinitions,
-SvgOptions): Promise<Buffer> => {
+}: SvgOptions): Promise<Buffer> => {
   const p = initCube(rv, puzzleSize, distanceFromCube, rotationSequence);
   const ro = initRenderOrder(rv);
 
@@ -365,14 +361,7 @@ SvgOptions): Promise<Buffer> => {
   cube += '</svg>';
 
   const svgBuffer = Buffer.from(cube);
-  return outputFormat === 'svg'
-    ? Promise.resolve(svgBuffer)
-    : convert(svgBuffer, outputFormat);
+  return Promise.resolve(svgBuffer)
 };
-
-const convert = (svgBuffer: Buffer, fmt: string): Promise<Buffer> =>
-  sharp(svgBuffer)
-    .toFormat(<keyof FormatEnum>fmt)
-    .toBuffer();
 
 export { generateImage };
