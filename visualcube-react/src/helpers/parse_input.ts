@@ -179,73 +179,6 @@ const generateFacelets = (
   return f;
 };
 
-// // Retrieve arrow defn's
-// const getArrowDefinition = (arw: string, dim: number) => {
-//   const astr = R.split(',', arw);
-//   const arrows = [];
-//   let i = 0;
-//   for (let value of astr) {
-//     const a = parse_arrow(value, dim);
-//     console.log({ a });
-//
-//     if (a) arrows[i++] = a;
-//   }
-//   return arrows;
-// };
-
-// TODO: Parse arrow definition
-// function parse_arrow(str: string, dim: number) {
-//   let parts = R.split('-', str);
-//   let fcodes: { [key: string]: number } = {
-//     U: 0,
-//     R: 1,
-//     F: 2,
-//     D: 3,
-//     L: 4,
-//     B: 5,
-//   };
-//
-//   console.log({ parts });
-//   if (R.length(parts) == 0) return null;
-//
-//   const split = R.match(/([URFDLB])([0-9]+)/g, parts[0]);
-//   console.log({ split });
-//   if (R.length(split) == 0) return null;
-//
-//   let arrow: number[][] = [[], [], []];
-//   let arw3;
-//   let arw4 = 1;
-//
-//   for (let i = 0; i < 2; i++) {
-//     if (i == 2 && split[1].length < 3) {
-//       arrow[2][3] = 2;
-//     }
-//     arrow[i][0] = fcodes[split[1][i]];
-//     const fn =
-//       Number(split[1][i]) >= dim * dim ? dim * dim - 1 : Number(split[1][i]);
-//     arrow[i][1] = fn % dim;
-//     arrow[i][2] = Math.floor(fn / dim);
-//   }
-//   // Parse remainder
-//   for (let i = 1; i < R.length(parts); i++) {
-//     if (R.test(/^i[0-9]+$/g, parts[i]) && arrow[2]) {
-//       arrow[2][3] = Number(parts[i].substr(1)) / 5;
-//       arrow[2][3] = arrow[2][3] > 10 ? 10 : arrow[2][3];
-//       // Var range = 0 to 50, default 10
-//     } else {
-//       if (R.test(/^s[0-9]+$/g, parts[i])) {
-//         arw4 = Number(parts[i].substr(1)) / 10;
-//         arw4 = arw4 > 2 ? 2 : arw4;
-//         // Var range = 0 to 20, default 10
-//       } else {
-//         arw3 = Number(parts[i]);
-//       }
-//     }
-//   }
-//
-//   return { arrow, arw3, arw4 };
-// }
-
 const parseEverything = (options: Options) => {
   const outputFormat: string = getOutputFormat(
     defaultConfig.outputFormat,
@@ -300,9 +233,6 @@ const parseEverything = (options: Options) => {
     options?.fo,
     defaultConfig.faceletOpacity
   );
-
-  // const arrowsDefinitions = getArrowDefinition(options.arw ?? '', puzzleSize);
-  // const arrowsColour = options.ac ?? defaultConfig.arrowsColour;
 
   const mask = getStageMask(defaultConfig.stage, options.stage, puzzleSize);
   const facelets = generateFacelets(puzzleSize, mask, view);
