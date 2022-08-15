@@ -172,8 +172,9 @@ const generateFacelets = (
   let f = [];
   for (let fc = 0; fc < 6; fc++) {
     for (let i = 0; i < dim * dim; i++) {
+      const num = view == 'trans' ? 7 : 6;
       f[fc * dim * dim + i] =
-        mask[fc * dim * dim + i] === '0' ? (view == 'trans' ? 7 : 6) : fc;
+        mask[fc * dim * dim + i] === '0' ? num: fc;
     }
   }
   return f;
@@ -192,21 +193,21 @@ const parseEverything = (options: Options) => {
     options.rtn
   );
 
-  const puzzleSize: number = isNumberBetweenOrDefault(
+  const puzzleSize = isNumberBetweenOrDefault(
     0,
     11,
     options.pzl,
     defaultConfig.defaultPuzzle
   );
 
-  const imageSize: number = isNumberBetweenOrDefault(
+  const imageSize = isNumberBetweenOrDefault(
     0,
     2049,
     options.size,
     defaultConfig.defaultSize
   );
 
-  const colourScheme: ColourScheme = getColourScheme(
+  const colourScheme = getColourScheme(
     defaultConfig.colourScheme,
     options.scheme
   );
