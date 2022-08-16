@@ -1,17 +1,21 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { VisualCube, VisualCubeProps } from '../src';
+import { defaultConfig } from '../src/helpers/config';
 
 const meta: Meta = {
   title: 'Welcome',
   component: VisualCube,
-  /*argTypes: {
-    children: {
-      control: {
-        type: 'text',
+  argTypes: {
+    options: {
+      name: 'options',
+      defaultValue: {
+        dist: defaultConfig.distance,
+        pzl: defaultConfig.defaultPuzzle,
+
       },
-    },
-  },*/
+    }
+  },
   parameters: {
     controls: { expanded: true },
   },
