@@ -22,13 +22,12 @@ export const VisualCube =  ({options}: VisualCubeProps) => {
     generateImage(parseEverything(options)).then((b) => {
       setBuffer(b);
     })
-  });
+  }, [options]);
 
   return (
     <div>
       <h1>hi</h1>
-      {buffer}
-      <p>{JSON.stringify(options, null, 2)}</p>
+      <img src={`data:image/svg+xml;base64,${buffer && buffer.toString('base64')}`} />
     </div>
   )
 };
