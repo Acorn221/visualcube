@@ -1,19 +1,7 @@
 import * as R from 'ramda';
 
-import { ColourScheme, Options } from './config';
-import { defaultConfig } from './config';
+import { ColourScheme, Options, defaultConfig } from './config';
 import { fcs_doperm, invert_alg } from './alg_parser';
-
-const getOutputFormat = (
-  defaultFormat: string,
-  formatOptions: string[],
-  requestedFormat: string | undefined
-): string => {
-  if (R.includes(requestedFormat, formatOptions)) {
-    return requestedFormat || '';
-  }
-  return defaultFormat;
-};
 
 const parseRotation = R.cond([
   [R.startsWith('x'), (r: string) => [0, Number(R.tail(r))]],
@@ -30,7 +18,7 @@ const getRotationSequence = (
     return [[0, -90]];
   }
   const regexMatch: string[] = rtn
-    ? R.match(/([xyz])(-?[0-9][0-9]?[0-9]?)/g, rtn)
+    ? R.match(/([xyz])(-?\d\d?\d?)/g, rtn)
     : [];
   const rotationMatch: string[] = R.isEmpty(regexMatch)
     ? defaultRotation
@@ -181,11 +169,6 @@ const generateFacelets = (
 };
 
 const parseEverything = (options: Options) => {
-  const outputFormat: string = getOutputFormat(
-    defaultConfig.outputFormat,
-    defaultConfig.outputFormatOptions,
-    options.fmt
-  );
   const view = options?.view ?? defaultConfig.view;
   const rotationSequence: number[][] = getRotationSequence(
     defaultConfig.rotation,
@@ -248,7 +231,6 @@ const parseEverything = (options: Options) => {
   );
 
   return {
-    outputFormat,
     view,
     rotationSequence,
     puzzleSize,
