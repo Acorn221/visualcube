@@ -9,7 +9,6 @@ interface ColourScheme {
 }
 
 interface Options {
-  fmt?: string;
   rtn?: string;
   view?: string;
   pzl?: number;
@@ -72,7 +71,6 @@ const defaultConfig = {
   cubeOpacity: 100,
   faceletOpacity: 100,
   distance: 5,
-  outputFormatOptions: ['jpeg', 'jpg', 'png', 'tiff', 'webp', 'svg'],
   OUTLINE_WIDTH: 0.94,
   sw: 0,
   ox: -0.9,
