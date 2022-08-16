@@ -12,7 +12,7 @@ const meta: Meta = {
       defaultValue: {
         dist: defaultConfig.distance,
         pzl: defaultConfig.defaultPuzzle,
-
+        view: 'plan'
       },
     }
   },

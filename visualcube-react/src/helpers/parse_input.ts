@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 
-import { ColourScheme, Options, defaultConfig } from './config';
+import { ColourScheme, Options, defaultConfig, SvgOptions, rvDefault } from './config';
 import { fcs_doperm, invert_alg } from './alg_parser';
 
 const parseRotation = R.cond([
@@ -33,12 +33,22 @@ const isNumberBetweenOrDefault = (
   y: number,
   num: number | undefined,
   def: number
-): number => <number>(R.both(R.lt(x), R.gt(y))(num || def) ? num : def);
+): number => {
+  if(num) {
+    return num > x && num < y ? num : def;
+  }
+  return def;
+};
 
 const getColourScheme = (
   defaultColourScheme: ColourScheme,
   scheme: ColourScheme | undefined
-): ColourScheme => R.mergeRight(defaultColourScheme, <object>scheme);
+): ColourScheme => {
+  if (scheme) {
+    return R.mergeRight(defaultColourScheme, scheme);
+  }
+  return defaultColourScheme;
+};
 
 // Retrieve stage variable
 const getStageMask = (
@@ -168,7 +178,7 @@ const generateFacelets = (
   return f;
 };
 
-const parseEverything = (options: Options) => {
+const parseEverything = (options: Options): SvgOptions => {
   const view = options?.view ?? defaultConfig.view;
   const rotationSequence: number[][] = getRotationSequence(
     defaultConfig.rotation,
@@ -231,17 +241,16 @@ const parseEverything = (options: Options) => {
   );
 
   return {
-    view,
-    rotationSequence,
-    puzzleSize,
-    cs: colourScheme,
-    distanceFromCube,
-    backgroundColour,
-    cubeOpacity,
-    faceOpacity,
-    facelets: faceletsAfterAlg,
-    alg,
-    rv: defaultConfig.rv,
+    view, // Correct
+    rotationSequence,// Correct
+    puzzleSize, // Correct
+    cs: colourScheme,// Correct
+    distanceFromCube,// Correct
+    backgroundColour,// Correct
+    cubeOpacity, // Correct
+    faceOpacity, // Correct
+    facelets: faceletsAfterAlg, // correct
+    rv: rvDefault,
     ox: defaultConfig.ox,
     oy: defaultConfig.oy,
     vw: defaultConfig.vw,

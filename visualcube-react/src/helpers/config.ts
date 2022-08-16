@@ -23,6 +23,12 @@ interface Options {
   bg?: string;
 }
 
+enum RVvalues {
+  'negative' = -1,
+  'zero' = 0,
+  'positive' = 1,
+}
+
 interface SvgOptions {
   view: string;
   rotationSequence: number[][];
@@ -33,7 +39,7 @@ interface SvgOptions {
   cubeOpacity: number;
   faceOpacity: number;
   facelets: number[];
-  rv: number[][];
+  rv: Array<RVvalues>[];
   ox: number;
   oy: number;
   vw: number;
@@ -43,6 +49,15 @@ interface SvgOptions {
   OUTLINE_WIDTH: number;
   imageSize: number;
 }
+
+const rvDefault: SvgOptions["rv"] = [
+  [RVvalues['zero'], RVvalues['negative'], RVvalues['zero']],
+  [RVvalues['positive'], RVvalues['zero'], RVvalues['zero']],
+  [RVvalues['zero'], RVvalues['zero'], RVvalues['negative']],
+  [RVvalues['zero'], RVvalues['positive'], RVvalues['zero']],
+  [RVvalues['negative'], RVvalues['zero'], RVvalues['zero']],
+  [RVvalues['zero'], RVvalues['zero'], RVvalues['positive']],
+];
 
 const defaultConfig = {
   maxPuzzleSize: 10,
@@ -77,15 +92,9 @@ const defaultConfig = {
   oy: -0.9,
   vw: 1.8,
   vh: 1.8,
-  rv: [
-    [0, -1, 0],
-    [1, 0, 0],
-    [0, 0, -1],
-    [0, 1, 0],
-    [-1, 0, 0],
-    [0, 0, 1],
-  ],
+  rv: rvDefault,
   defaultSize: 128,
 };
 
-export { defaultConfig, SvgOptions, ColourScheme, Options };
+
+export { defaultConfig, rvDefault, SvgOptions, ColourScheme, Options };

@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import { SvgOptions } from './config';
 
 // Project 3D points onto a 2D plane
 const project = (q: number[], d: number): number[] => [
@@ -8,7 +9,7 @@ const project = (q: number[], d: number): number[] => [
 ];
 
 // Returns whether a face is visible
-const face_visible = (face: number, rv: number[][]): boolean =>
+const face_visible = (face: number, rv: SvgOptions["rv"]): boolean =>
   rv[face][2] < -0.105;
 
 // Returns svg for a cube outline

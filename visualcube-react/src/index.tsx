@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, useState, useEffect } from 'react';
 
-import { Options } from './helpers/config';
+import { Options, defaultConfig } from './helpers/config';
 import { parseEverything } from './helpers/parse_input';
 import { generateImage } from './helpers/svg-parser';
 
@@ -17,11 +17,14 @@ export interface VisualCubeProps extends HTMLAttributes<HTMLDivElement> {
 // : FC<VisualCubeProps> 
 export const VisualCube =  ({options}: VisualCubeProps) => {
   const [buffer, setBuffer] = useState<Buffer>();
-  
+
   useEffect(() => {
-    generateImage(parseEverything(options)).then((b) => {
+    const passed = parseEverything(options);
+    
+    console.log('passed: ', passed);
+    generateImage(parseEverything(passed)).then((b) => {
       setBuffer(b);
-    })
+    });
   }, [options]);
 
   return (

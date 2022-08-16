@@ -188,7 +188,7 @@ const facelet_svg = (
 // Renders the top rim of the R U L and B faces out from side of cube
 const oll_svg = (
   fc: number,
-  rv: number[][],
+  rv: SvgOptions["rv"],
   dim: number,
   p: number[][][][],
   cc: string,
